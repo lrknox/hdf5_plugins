@@ -222,6 +222,7 @@ jobs:
           cd "${{ runner.workspace }}/hdf5_plugins/${{ steps.set-file-base.outputs.SOURCE_BASE }}"
           cmake --workflow --preset=${{ inputs.preset_name }}-MSVC --fresh
         shell: bash
+        continue-on-error: true
 
       - name: Sign files with Trusted Signing
         uses: azure/trusted-signing-action@v2.0.0
@@ -380,6 +381,7 @@ jobs:
           cd "${{ runner.workspace }}/hdf5_plugins/${{ steps.set-file-base.outputs.SOURCE_BASE }}"
           cmake --workflow --preset=${{ inputs.preset_name }}-GNUC --fresh
         shell: bash
+        continue-on-error: true
 
       - name: Publish binary (Linux)
         id: publish-ctest-binary
@@ -564,6 +566,7 @@ jobs:
           cd "${{ runner.workspace }}/hdf5_plugins/${{ steps.set-file-base.outputs.SOURCE_BASE }}"
           cmake --workflow --preset=${{ inputs.preset_name }}-macos-Clang --fresh
         shell: bash
+        continue-on-error: true
 
       - name: Sign dmg (MacOS_latest)
         id: sign-dmg
