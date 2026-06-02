@@ -143,7 +143,7 @@ jobs:
           token: ${{ github.token }}
 
       - name: Uncompress gh binary (Win)
-        run: 7z x ${{ github.workspace }}/${{ inputs.use_hdf }}-win-vs2022_cl.zip
+        run: 7z x ${{ github.workspace }}/${{ inputs.hdf_tag }}-win-vs2022_cl.zip
 
       - name: Uncompress hdf5 binary (Win)
         working-directory: ${{ github.workspace }}/hdf5
@@ -343,7 +343,7 @@ jobs:
               ls ${{ runner.workspace }}
 
       - name: Uncompress gh binary (Linux)
-        run: tar -zxvf ${{ github.workspace }}/${{ inputs.use_hdf }}-ubuntu-2404_gcc.tar.gz
+        run: tar -zxvf ${{ github.workspace }}/${{ inputs.hdf_tag }}-ubuntu-2404_gcc.tar.gz
 
       - name: Uncompress hdf5 binary (Linux)
         run:  |
@@ -526,7 +526,7 @@ jobs:
               ls ${{ runner.workspace }}
 
       - name: Uncompress gh binary (MacOS_latest)
-        run: tar -zxvf ${{ github.workspace }}/${{ inputs.use_hdf }}-macos14_clang*.tar.gz
+        run: tar -zxvf ${{ github.workspace }}/${{ inputs.hdf_tag }}-macos14_clang*.tar.gz
 
       - name: Uncompress hdf5 binary (MacOS_latest)
         run:  |
