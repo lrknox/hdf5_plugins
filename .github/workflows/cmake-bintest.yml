@@ -57,7 +57,7 @@ jobs:
         with:
           repository: 'HDFGroup/hdf5'
           tag: 'snapshot'
-          fileName: '${{ inputs.use_hdf }}-win-vs2022_cl.zip'
+          fileName: 'snapshot-win-vs2022_cl.zip'
           token: ${{ github.token }}
 
       - name: Get hdf5 release
@@ -170,7 +170,7 @@ jobs:
         with:
           repository: 'HDFGroup/hdf5'
           tag: 'snapshot'
-          fileName: '${{ inputs.use_hdf }}-ubuntu-2404_gcc.tar.gz'
+          fileName: 'snapshot-ubuntu-2404_gcc.tar.gz'
           token: ${{ github.token }}
 
       - name: Get hdf5 release
@@ -273,7 +273,7 @@ jobs:
         with:
           repository: 'HDFGroup/hdf5'
           tag: 'snapshot'
-          fileName: '${{ inputs.use_hdf }}-macos14_clang.tar.gz'
+          fileName: 'snapshot-macos14_clang.tar.gz'
           token: ${{ github.token }}
 
       - name: Get hdf5 release
