@@ -139,7 +139,7 @@ jobs:
         with:
           repository: 'HDFGroup/hdf5'
           tag: '${{ inputs.hdf_tag }}'
-          fileName: '${{ inputs.use_hdf }}-win-vs2022_cl.zip'
+          fileName: '${{ inputs.hdf_tag }}-win-vs2022_cl.zip'
           token: ${{ github.token }}
 
       - name: Uncompress gh binary (Win)
@@ -334,7 +334,7 @@ jobs:
         with:
           repository: 'HDFGroup/hdf5'
           tag: '${{ inputs.hdf_tag }}'
-          fileName: '${{ inputs.use_hdf }}-ubuntu-2404_gcc.tar.gz'
+          fileName: '${{ inputs.hdf_tag }}-ubuntu-2404_gcc.tar.gz'
           token: ${{ github.token }}
 
       - name: List files for the space (Linux)
@@ -517,7 +517,7 @@ jobs:
         with:
           repository: 'HDFGroup/hdf5'
           tag: '${{ inputs.hdf_tag }}'
-          fileName: '${{ inputs.use_hdf }}-macos14_clang.tar.gz'
+          fileName: '${{ inputs.hdf_tag }}-macos14_clang.tar.gz'
           token: ${{ github.token }}
 
       - name: List files for the space (MacOS_latest)
