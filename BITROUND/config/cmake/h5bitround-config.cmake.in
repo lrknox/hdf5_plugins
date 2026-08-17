@@ -10,7 +10,7 @@
 # help@hdfgroup.org.
 #
 #-----------------------------------------------------------------------------
-# h5granularbr Config file for compiling against h5granularbr install directory
+# h5bitround Config file for compiling against h5bitround install directory
 #-----------------------------------------------------------------------------
 @PACKAGE_INIT@
 
@@ -41,7 +41,7 @@ set (${H5BITROUND_PACKAGE_NAME}_VERSION_MINOR  @H5BITROUND_VERSION_MINOR@)
 
 #-----------------------------------------------------------------------------
 # Don't include targets if this file is being picked up by another
-# project which has already built h5granularbr as a subproject
+# project which has already built h5bitround as a subproject
 #-----------------------------------------------------------------------------
 if (NOT TARGET "@H5BITROUND_PACKAGE@")
   include (@PACKAGE_SHARE_INSTALL_DIR@/@H5BITROUND_PACKAGE@@H5BITROUND_PACKAGE_EXT@-targets.cmake)

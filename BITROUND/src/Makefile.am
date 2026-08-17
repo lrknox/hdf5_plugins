@@ -11,9 +11,9 @@ plugindir = @HDF5_PLUGIN_DIR@
 # This linker flag specifies libtool version info.
 # See http://www.gnu.org/software/libtool/manual/libtool.html#Libtool-versioning
 # for information regarding incrementing `-version-info`.
-libh5granularbr_la_LDFLAGS = -version-info 0:0:0
+libh5bitround_la_LDFLAGS = -version-info 0:0:0
 
-# The libh5granularbr library for plugin module.
+# The libh5bitround library for plugin module.
 # Build it as shared library.
-#plugin_LTLIBRARIES = libh5granularbr.la
-#libh5granularbr_la_SOURCES = H5Zgranularbr.c
+#plugin_LTLIBRARIES = libh5bitround.la
+#libh5bitround_la_SOURCES = H5Zbitround.c

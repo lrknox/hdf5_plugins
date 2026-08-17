@@ -55,13 +55,13 @@ ENVCMD="env HDF5_PLUGIN_PATH=$LD_LIBRARY_PATH/plugin"
 TESTDIR=$builddir
 
 
-$H5CC -shlib $srcdir/h5ex_d_granularbr.c -o h5ex_d_granularbr
+$H5CC -shlib $srcdir/h5ex_d_bitround.c -o h5ex_d_bitround
 
 SRC_TESTFILES="$srcdir/testfiles"
 LIST_TEST_FILES="
 $SRC_TESTFILES/h5repack_layout.h5
-$SRC_TESTFILES/h5ex_d_granularbr.ddl
-$SRC_TESTFILES/h5ex_d_granularbr.tst
+$SRC_TESTFILES/h5ex_d_bitround.ddl
+$SRC_TESTFILES/h5ex_d_bitround.tst
 $SRC_TESTFILES/h5repack_layout.h5-ud_convert.ddl
 $SRC_TESTFILES/ud_convert.h5repack_layout.h5.tst
 "
@@ -244,9 +244,9 @@ echo $ENVCMD
 
 COPY_TESTFILES_TO_TESTDIR
 
-EXETEST h5ex_d_granularbr h5ex_d_granularbr.tst
+EXETEST h5ex_d_bitround h5ex_d_bitround.tst
 
-DUMPTEST h5ex_d_granularbr.ddl h5ex_d_granularbr.h5
+DUMPTEST h5ex_d_bitround.ddl h5ex_d_bitround.h5
 
 REPACKTEST h5repack_layout.h5 out-ud_convert.h5repack_layout.h5 -v -f UD=32008,0,3,0,0,0 -l CHUNK=4x8
 

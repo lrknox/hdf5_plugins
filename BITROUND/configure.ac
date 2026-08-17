@@ -1,8 +1,8 @@
 # Copyright by The HDF Group. All rights reserved.
 
 # This is the main configure file for the BITROUND filter, a HDF5 plugin
-# library that enables BitGrooming quantization as an HDF5 filter.
-# This file is modified from a configure.ac from the hdf5_plugin project.
+# library that enables BitRounding quantization as an HDF5 filter.
+# This file is modified from a configure.ac in the hdf5_plugin project.
 
 # Allen Byrne, Ed Hartnett 1/14/19
 # Charlie Zender 9/10/20
@@ -36,7 +36,7 @@ AC_ARG_WITH([hdf5-plugin-path],
 AC_MSG_RESULT($HDF5_PLUGIN_PATH)
 AC_SUBST([HDF5_PLUGIN_PATH])
 
-# Are the BitGroom library and header present?
+# Are the BitRound library and header present?
 # 20200912 fxm: Eventually move quantization library into, e.g., ccr_ppc.[c/h]?
 # For now, keep filter source code ccr_bgr() in plugin
 # 20200912: does not invoking these lines prevent depcomp installation?

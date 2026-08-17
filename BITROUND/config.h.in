@@ -15,7 +15,7 @@
 /* Define to 1 if you have the `hdf5' library (-lhdf5). */
 #undef HAVE_LIBHDF5
 
-/* Define to 1 if you have the `granularbr' library (-lgranularbr). */
+/* Define to 1 if you have the `bitround' library (-lbitround). */
 #undef HAVE_LIBBITROUND
 
 /* Define to 1 if you have the <memory.h> header file. */

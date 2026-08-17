@@ -29,7 +29,7 @@ set (H5BITROUND_INCLUDE_DIRS ${H5BITROUND_INCLUDE_DIRS}
 # Define H5BITROUND Library
 #-----------------------------------------------------------------------------
 set (H5BITROUND_SRCS
-    ${H5BITROUND_SRC_SOURCE_DIR}/H5Zgranularbr.c
+    ${H5BITROUND_SRC_SOURCE_DIR}/H5Zbitround.c
 )
 
 add_library (${H5BITROUND_LIB_TARGET} MODULE ${H5BITROUND_SRCS})

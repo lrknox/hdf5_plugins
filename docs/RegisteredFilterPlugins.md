@@ -62,6 +62,7 @@ Upon receiving a request with the above information, HDF Group will register the
 |`32029`   |<a href="#trpx">TERSE/PROLIX</a>    |A lossless and fast compression of the diffraction data|
 |`32030`   |<a href="#ffmpeg">FFMPEG</a>    |A lossy compression filter based on ffmpeg video library|
 |`32031`   |<a href="#jpeg2000">JPEG2000</a>    | A compression filter for lossy and lossless coding|
+|`32032`   |<a href="#bitround">BitRound</a>    | The BitRound floating-point value quantization algorithm |
 
 > [!NOTE]
 > Please contact the maintainer of a filter plugin for help with the plugin or its filter in the HDF5 library.
@@ -265,22 +266,30 @@ The filter's source code is available from https://github.com/lz4/lz4.
 
 #### Plugin ID `32004` Information
 
-Number of `cd_values[]` parameters is one (`cd_nelmts = 1`).
+Number of `cd_values[]` parameters is up to two (`cd_nelmts <= 2`).
 
 | `cd_values[]` | Description |
 |---|---|
 | `[0]` | Block size in bytes at most 2,113,929,216 bytes. Default is 1 GiB (1,073,741,824 bytes). (optional) |
+| `[1]` | Encoder selector, stored unsigned but interpreted as signed `int`. Negative values store as their two's-complement bit pattern, so `-8` prints as `4294967288` in `h5dump -p`. (optional) |
 
+`cd_values[1]` follows liblz4's `lz4frame` signed compression-level convention:
+
+ * `>= 2` selects `LZ4_compress_HC` at that level (`2..12`; higher values clamp to `12`, and `9` is the LZ4HC default).
+ * `0` or `1` selects the default fast encoder (`LZ4_compress_default`, acceleration `1`).
+ * A negative value selects `LZ4_compress_fast` with acceleration = `-cd_values[1] + 1` (so `-1` is acceleration `2`), clamped below at `-65536` (acceleration `LZ4_ACCELERATION_MAX`, currently `65537`). To request a specific acceleration `A >= 2`, set `cd_values[1] = 1 - A` (e.g. acceleration `9` → `-8`).
  The description of the chunk binary format produced by this plugin is at [LZ4_HDF5_format.md](https://github.com/HDFGroup/hdf5_plugins/blob/master/LZ4/LZ4_HDF5_format.md).
 
-`h5repack` example for the `--filter` option: `<objects list>:UD=32004,0,0`.
+`h5repack` examples for the `--filter` option:
+* default encoder, default block size: `<objects list>:UD=32004,0,0`
+* LZ4HC level 9 (archival), default block size: `<objects list>:UD=32004,0,2,0,9`
 
-https://github.com/HDFGroup/hdf5_plugins/tree/master/LZ4/src
+https://github.com/HDFGroup/hdf5_plugins/tree/master/LZ4/
 
 ##### Contact
 
-Michael Rissi (Dectris Ltd.)<br/>
-Email: michael dot rissi at dectris dot com
+HDF Group Helpdesk<br/>
+Email: help at hdfgroup dot org
 
 ---
 
@@ -904,3 +913,36 @@ https://github.com/hmaarrfk/hdf5_jpeg2000/
 ##### Contact
 Mark Harfouche
 mark dot harfouche at gmail dot com
+
+---
+
+### BitRound <a name="bitround"></a>
+
+#### Filter Description
+
+BitRound is a lossy pre-compression filter for floating-point scientific data. It reduces the effective precision of each value to a level commensurate with the data's actual information content, producing output that compresses far more efficiently under subsequent lossless algorithms while introducing only controlled, bounded error.
+
+BitRound works by operating directly on the IEEE 754 bit representation of each value, independent of any chunk-level statistics. It retains a fixed number of leading mantissa bits and clears every trailing mantissa bit to zero. Values whose high-order bits already agree become identical once their low-order bits are zeroed, and adjacent values that round to the same retained bit pattern collapse to a single bit string. Both effects create the long runs of zero bits and repeated byte patterns that lossless compressors exploit.
+
+The user specifies the number of significant mantissa bits to keep, `NSB`. Every value in the dataset is treated identically: the filter rounds to nearest at that bit boundary by adding a half-ulp and then clearing the trailing mantissa bits (an integer "add-and-shave", with ties rounded away from zero). Because the mantissa encodes the significand relative to each value's own exponent, the error introduced is *relative* rather than absolute: the maximum relative error for any single value is $|\epsilon| / |x| ≤ 2^{-(NSB+1)}$. Users who prefer to specify precision in decimal terms can convert a target of `NSD` significant decimal digits via $NSB = \lceil NSD \cdot \log_2 10 \rceil ≈ \lceil 3.32 \cdot NSD \rceil$.
+
+This means the relative uncertainty introduced to any value is fixed in advance and uniform across the entire dataset, regardless of local dynamic range. A large value and a small value retain the same number of significant bits and therefore the same relative precision, while their absolute errors differ in proportion to their magnitudes. BitRound never inspects the minimum or maximum of a chunk; the precision it preserves does not adapt to the spread of the surrounding data, always retaining exactly `NSB` significant mantissa bits of resolution relative to each value's own magnitude.
+
+The algorithm paper: Klöwer M, Razinger M, Dominguez JJ, Düben PD, Palmer TN. "Compressing atmospheric data into its real information content." *Nat. Comput. Sci.* **1**(11), 713–724 (2021). [doi:10.1038/s43588-021-00156-2](https://doi.org/10.1038/s43588-021-00156-2)
+
+#### Plugin ID `32032` Information
+
+| `cd_values[]` | Description |
+|---|---|
+| `[0]` | **NSB** — number of significant mantissa bits to retain. The only user-facing parameter. **mandatory** |
+| `[1]` | Datum size in bytes — `4` (float32) or `8` (float64). **internal use, reserved** |
+| `[2]` | Flag: whether a fill value is defined (`0` = no, `1` = yes). Tells the encode loop whether slot `[3]`/`[4]` holds a meaningful sentinel to skip. **internal use, reserved** |
+| `[3]` | Raw fill value bytes, low 32 bits. For float32 the value fits in `[3]` alone; for float64 it spans `[3]`+`[4]`. **internal use, reserved** |
+| `[4]` | Raw fill value bytes, high 32 bits. **internal use, reserved** |
+
+Repository: https://github.com/HDFGroup/hdf5_plugins/tree/master/BITROUND
+
+##### Contact
+
+HDF Group Helpdesk<br>
+help at hdfgroup dot org

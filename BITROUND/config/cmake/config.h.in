@@ -21,7 +21,7 @@
 /* Define to 1 if you have the `hdf5' library (-lhdf5). */
 #cmakedefine HAVE_LIBHDF5 @HAVE_LIBHDF5@
 
-/* Define to 1 if you have the `granularbr' library (-lgranularbr). */
+/* Define to 1 if you have the `bitround' library (-lbitround). */
 #cmakedefine HAVE_LIBBITROUND @HAVE_LIBBITROUND@
 
 /* Define to 1 if you have the <math.h> header file. */

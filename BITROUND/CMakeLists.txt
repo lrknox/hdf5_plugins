@@ -61,7 +61,7 @@ set (H5BITROUND_PACKAGE_URL "http://www.hdfgroup.org")
 set (H5BITROUND_PACKAGE_BUGREPORT "help@hdfgroup.org")
 set (H5BITROUND_PACKAGE_SOVERSION "${H5BITROUND_SOVERS_MAJOR}.${H5BITROUND_SOVERS_RELEASE}.${H5BITROUND_SOVERS_MINOR}")
 set (H5BITROUND_PACKAGE_SOVERSION_MAJOR "${H5BITROUND_SOVERS_MAJOR}")
-message(STATUS "Configuring for granularbr HDF5 Plugin version: " ${H5BITROUND_PACKAGE_STRING})
+message(STATUS "Configuring for bitround HDF5 Plugin version: " ${H5BITROUND_PACKAGE_STRING})
 
 #-----------------------------------------------------------------------------
 # Include some macros for reusable code
@@ -80,15 +80,15 @@ HDF5_SUPPORT (TRUE)
 message (STATUS "H5BITROUND link libs: ${H5PL_LINK_LIBS}")
 
 #-----------------------------------------------------------------------------
-# Generate the granularbr_config.h file containing user settings needed by compilation
+# Generate the bitround_config.h file containing user settings needed by compilation
 #-----------------------------------------------------------------------------
-configure_file (${H5BITROUND_RESOURCES_DIR}/config.h.in ${H5BITROUND_BINARY_DIR}/granularbr_config.h @ONLY)
+configure_file (${H5BITROUND_RESOURCES_DIR}/config.h.in ${H5BITROUND_BINARY_DIR}/bitround_config.h @ONLY)
 
 include (ExternalProject)
 set (H5PL_ALLOW_EXTERNAL_SUPPORT "NO" CACHE STRING "Allow External Library Building (NO GIT TGZ)")
 set_property (CACHE H5PL_ALLOW_EXTERNAL_SUPPORT PROPERTY STRINGS NO GIT TGZ)
 #-----------------------------------------------------------------------------
-option (BUILD_BITROUND_LIBRARY_SOURCE "build the granularbr library within the plugin" ON)
+option (BUILD_BITROUND_LIBRARY_SOURCE "build the bitround library within the plugin" ON)
 if (NOT BUILD_BITROUND_LIBRARY_SOURCE)
   if (H5PL_ALLOW_EXTERNAL_SUPPORT MATCHES "GIT" OR H5PL_ALLOW_EXTERNAL_SUPPORT MATCHES "TGZ")
     option (BITROUND_USE_EXTERNAL "Use External Library Building for BITROUND" 1)
@@ -104,7 +104,7 @@ if (NOT BUILD_BITROUND_LIBRARY_SOURCE)
     endif ()
   endif ()
   #-----------------------------------------------------------------------------
-  # granularbr Library Settings
+  # bitround Library Settings
   #-----------------------------------------------------------------------------
   if (NOT H5_BITROUND_HEADER)
     if (NOT BITROUND_USE_EXTERNAL)
@@ -130,7 +130,7 @@ if (NOT BUILD_BITROUND_LIBRARY_SOURCE)
       endif ()
     endif ()
   endif ()
-  message (STATUS "granularbr found: INC=${BITROUND_INCLUDE_DIR} TOOLS=${BITROUND_LIBRARIES}")
+  message (STATUS "bitround found: INC=${BITROUND_INCLUDE_DIR} TOOLS=${BITROUND_LIBRARIES}")
   set (H5PL_LINK_LIBS ${H5PL_LINK_LIBS} ${BITROUND_LIBRARIES})
 
   if (BITROUND_FOUND)
@@ -142,7 +142,7 @@ endif ()
 #-----------------------------------------------------------------------------
 # Dashboard and Testing Settings
 #-----------------------------------------------------------------------------
-option (H5PL_BUILD_TESTING "Build h5granularbr Unit Testing" OFF)
+option (H5PL_BUILD_TESTING "Build h5bitround Unit Testing" OFF)
 if (H5PL_BUILD_TESTING)
   set (DART_TESTING_TIMEOUT 1200 CACHE STRING
        "Timeout in seconds for each test (default 1200=20minutes)")
@@ -154,7 +154,7 @@ endif ()
 
 add_subdirectory (src)
 
-option (H5PL_BUILD_EXAMPLES "Build h5granularbr Examples" OFF)
+option (H5PL_BUILD_EXAMPLES "Build h5bitround Examples" OFF)
 if (H5PL_BUILD_EXAMPLES)
   add_subdirectory (example)
 endif ()

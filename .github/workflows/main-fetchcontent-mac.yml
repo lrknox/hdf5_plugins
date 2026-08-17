@@ -29,7 +29,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: Get sources for HDF5
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: HDFGroup/hdf5
           ref: "${{ inputs.hdf5_tag }}"
@@ -82,6 +82,7 @@ jobs:
             -DENABLE_ZFP=ON \
             -DENABLE_ZSTD=OFF \
             -DENABLE_BITGROOM=ON \
+            -DENABLE_GRANULAR_BITROUND=ON \
             -DENABLE_BITROUND=ON \
             -DENABLE_BSHUF=ON \
             ..
@@ -101,10 +102,10 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: Get sources for HDF5 plugins project
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Get sources for HDF5
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: HDFGroup/hdf5
           ref: "${{ inputs.hdf5_tag }}"
@@ -151,7 +152,7 @@ jobs:
           cd "${{ runner.workspace }}/build" 
           cmake \
             -DCMAKE_BUILD_TYPE=${{ inputs.build_mode }} \
-            -DHDF5_DIR=${{ github.workspace }}/hdf5_build/cmake \
+            -DHDF5_DIR=${{ github.workspace }}/hdf5_build/lib/cmake/hdf5 \
             -DH5PL_ALLOW_EXTERNAL_SUPPORT=GIT \
             -DH5PL_BUILD_TESTING=ON \
             -DH5PL_BUILD_EXAMPLES=ON \
@@ -165,6 +166,7 @@ jobs:
             -DENABLE_ZFP=ON \
             -DENABLE_ZSTD=ON \
             -DENABLE_BITGROOM=ON \
+            -DENABLE_GRANULAR_BITROUND=ON \
             -DENABLE_BITROUND=ON \
             -DENABLE_BSHUF=ON \
             $GITHUB_WORKSPACE
@@ -182,10 +184,10 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: Get sources for HDF5 plugins project
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Get sources for HDF5
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: HDFGroup/hdf5
           ref: "${{ inputs.hdf5_tag }}"
@@ -227,7 +229,7 @@ jobs:
           cd "${{ runner.workspace }}/build"
           cmake \
             -DCMAKE_BUILD_TYPE=${{ inputs.build_mode }} \
-            -DHDF5_DIR=${{ github.workspace }}/hdf5_build/cmake \
+            -DHDF5_DIR=${{ github.workspace }}/hdf5_build/lib/cmake/hdf5 \
             -DH5PL_ALLOW_EXTERNAL_SUPPORT=TGZ \
             -DH5PL_BUILD_TESTING=ON \
             -DH5PL_BUILD_EXAMPLES=ON \
@@ -240,6 +242,7 @@ jobs:
             -DENABLE_ZFP=ON \
             -DENABLE_ZSTD=ON \
             -DENABLE_BITGROOM=ON \
+            -DENABLE_GRANULAR_BITROUND=ON \
             -DENABLE_BITROUND=ON \
             -DENABLE_BSHUF=ON \
             $GITHUB_WORKSPACE

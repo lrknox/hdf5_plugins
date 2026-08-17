@@ -10,7 +10,7 @@
 # help@hdfgroup.org.
 #
 #-----------------------------------------------------------------------------
-# h5granularbr Version file for install directory
+# h5bitround Version file for install directory
 #-----------------------------------------------------------------------------
 
 set (PACKAGE_VERSION @H5BITROUND_VERSION_STRING@)
